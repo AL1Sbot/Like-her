@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>某个秘密的倒计时</title>
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+</script>
+<script language="javascript">
+$(function(){
+updateEndTime();
+});
+function updateEndTime()
+{
+var date = new Date();
+var time = date.getTime(); 
+$(".settime").each(function(i){
+var endDate =this.getAttribute("endTime");	
+var endDate1 = eval('new Date(' + endDate.replace(/\d+(?=-[^-]+$)/, function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) +')');
+var endTime = endDate1.getTime();
+var lag = (endTime - time) / 1000;
+if(lag > 0)
+{
+var second = Math.floor(lag % 60);
+var minite = Math.floor((lag / 60) % 60);
+var hour = Math.floor((lag / 3600) % 24);
+var day = Math.floor((lag / 3600) / 24);
+$(this).html(day+"天"+hour+"小时"+minite+"分"+second+"秒");
+}
+else{
+$(this).removeClass("settime");
+$(this).html("秘密已经揭晓请移步到博客！");
+}
+});
+setTimeout("updateEndTime()",1000);
+}
+</script>
+	<style>
+		*{margin:0;padding:0}
+		body{
+			width: 1920px;
+			height: 1080px;
+			text-align: center;
+			font-size: 30px;
+			margin-top: 400px;
+			background: url(http://api.wpnunion.cn:23333/scenery);
+		}
+	</style>
+</head>
+
+<body>
+	
+	<div>某秘密的倒计时</div>
+<div id="12" class="settime" endTime="2024-07-31 00:00:01"></div>
+</body>
+</html>
